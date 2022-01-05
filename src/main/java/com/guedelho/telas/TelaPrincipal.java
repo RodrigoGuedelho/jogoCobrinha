@@ -16,6 +16,7 @@ public class TelaPrincipal extends JFrame {
 		// Tela vai se ajustar no tamanho dos componentes que tiverem nela
 		this.pack();
 		this.setLocationRelativeTo(null);
+		this.setResizable(false);
 	}
 	
 	public Canvas getCanvas() {
