@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.guedelho.enums.Direcao;
@@ -25,8 +26,14 @@ public class Canvas extends JPanel{
 	private int posicaoComidaX = 0;
 	private int posicaoComidaY = 0;
 	private int tamanhoMatrizPanelCobrinha = 30;
+	private boolean mostraMensagemGameOver = true;
 	
 	public Canvas() {
+		init();
+	}
+	
+	public void init() {
+		mostraMensagemGameOver = true;
 		cobrinha = new ArrayList<>();
 		cobrinha.add(new NodeCobrinha(0, 0));
 		cobrinha.add(new NodeCobrinha(tamanhoBlocoCobrinha + 1, 0));
@@ -72,25 +79,47 @@ public class Canvas extends JPanel{
 	}
 	@Override
 	public void paint(Graphics g) {
-		g.clearRect(0, 0, getWidth(), getHeight());
-		for (NodeCobrinha nodeCobrinha : cobrinha) {
-			g.fillRect(nodeCobrinha.getPosicaoX(), nodeCobrinha.getPosicaoY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
-			if (nodeCobrinha.getPosicaoX() == getPosicaoComidaX() && nodeCobrinha.getPosicaoY() == getPosicaoComidaY()) {
-				desenharComidaCobra = true;
+		if (!verificarGameOver()) {
+			g.clearRect(0, 0, getWidth(), getHeight());
+			for (NodeCobrinha nodeCobrinha : cobrinha) {
+				g.fillRect(nodeCobrinha.getPosicaoX(), nodeCobrinha.getPosicaoY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
+				if (nodeCobrinha.getPosicaoX() == getPosicaoComidaX() && nodeCobrinha.getPosicaoY() == getPosicaoComidaY()) 
+					desenharComidaCobra = true;			
 			}
-				
+			
+			if (desenharComidaCobra) {
+				desenharComidaCobra = false;
+				atualizarPosicaoComidaCobrinha();
+				cobrinha.add(0, new NodeCobrinha(cobrinha.get(0).getPosicaoX()- (tamanhoBlocoCobrinha +1), 
+						cobrinha.get(0).getPosicaoY()));
+			}
+			g.fillRect(getPosicaoComidaX(), getPosicaoComidaY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
+		} else{
+			if (mostraMensagemGameOver) {
+				init();
+			}
 		}
 		
-		if (desenharComidaCobra) {
-			desenharComidaCobra = false;
-			atualizarPosicaoComidaCobrinha();
-			cobrinha.add(0, new NodeCobrinha(cobrinha.get(0).getPosicaoX()- (tamanhoBlocoCobrinha +1), 
-					cobrinha.get(0).getPosicaoY()));
-		}
-		g.fillRect(getPosicaoComidaX(), getPosicaoComidaY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
 		this.getToolkit().sync();
 	}
 	
+	public boolean verificarGameOver() {
+		NodeCobrinha nodeCabecaCobrinha= cobrinha.get(cobrinha.size()-1);
+		for (int i = 0; i < cobrinha.size()-1; i++) {
+			NodeCobrinha nodeCobrinha = cobrinha.get(i);	
+			if (nodeCabecaCobrinha.getPosicaoX() == nodeCobrinha.getPosicaoX() 
+					&& nodeCabecaCobrinha.getPosicaoY() == nodeCobrinha.getPosicaoY())
+				return true;
+		}
+		int posicaoMaximaXY = tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha + 1);
+		if (nodeCabecaCobrinha.getPosicaoX() >  posicaoMaximaXY
+				|| nodeCabecaCobrinha.getPosicaoY() > posicaoMaximaXY
+				|| nodeCabecaCobrinha.getPosicaoX() < 0
+				|| nodeCabecaCobrinha.getPosicaoY() < 0)
+			return true;
+		
+		return false;
+	}
 	public void atualizar() {
 		if (movimentandoDireita)
 			caminharCobrinha(Direcao.DIREITA);
