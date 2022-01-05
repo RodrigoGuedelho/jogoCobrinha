@@ -10,7 +10,6 @@ import java.util.Random;
 
 import com.guedelho.enums.Direcao;
 import com.guedelho.models.NodeCobrinha;
-import com.sun.org.apache.xalan.internal.xsltc.DOMEnhancedForDTM;
 
 public class Canvas extends java.awt.Canvas{
 	private static final long serialVersionUID = 1L;
@@ -56,31 +55,16 @@ public class Canvas extends java.awt.Canvas{
 	}
 	
 	public void caminharCobrinha(Direcao direcao) {
-		if (direcao.equals(Direcao.ESQUERDA)) {
-			NodeCobrinha nodeAuxiliar = cobrinha.get(cobrinha.size()-1);
-			List<NodeCobrinha> cobrinhaAuxiliar = new ArrayList<>();
-			
-			/*for (int i = cobrinha.size() -1; i >= 0; i--) {
-				cobrinhaAuxiliar.add(cobrinha.get(i));
-			}*/
-			cobrinha.remove(0);
+		NodeCobrinha nodeAuxiliar = cobrinha.get(cobrinha.size()-1);
+		cobrinha.remove(0);
+		if (direcao.equals(Direcao.ESQUERDA))
 			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX() - 16, nodeAuxiliar.getPosicaoY()));
-		}
-		else if (direcao.equals(Direcao.DIREITA)) {
-			NodeCobrinha nodeAuxiliar = cobrinha.get(cobrinha.size()-1);
-			cobrinha.remove(0);
+		else if (direcao.equals(Direcao.DIREITA))
 			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX() + 16, nodeAuxiliar.getPosicaoY()));
-		}
-		else if (direcao.equals(Direcao.CIMA)) {
-			NodeCobrinha nodeAuxiliar = cobrinha.get(cobrinha.size()-1);
-			cobrinha.remove(0);
+		else if (direcao.equals(Direcao.CIMA))
 			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX(), nodeAuxiliar.getPosicaoY() - 16));
-		}
-		else if (direcao.equals(Direcao.BAIXO)) {
-			NodeCobrinha nodeAuxiliar = cobrinha.get(cobrinha.size()-1);
-			cobrinha.remove(0);
+		else if (direcao.equals(Direcao.BAIXO)) 
 			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX(), nodeAuxiliar.getPosicaoY() + 16));
-		}
 	}
 	@Override
 	public void paint(Graphics g) {
@@ -96,7 +80,7 @@ public class Canvas extends java.awt.Canvas{
 		if (desenharComidaCobra) {
 			desenharComidaCobra = false;
 			atualizarPosicaoComidaCobrinha();
-			cobrinha.add(new NodeCobrinha(cobrinha.get(0).getPosicaoX()- (tamanhoBlocoCobrinha +1), 
+			cobrinha.add(0, new NodeCobrinha(cobrinha.get(0).getPosicaoX()- (tamanhoBlocoCobrinha +1), 
 					cobrinha.get(0).getPosicaoY()));
 		}
 		g.fillRect(getPosicaoComidaX(), getPosicaoComidaY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
