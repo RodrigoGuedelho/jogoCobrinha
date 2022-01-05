@@ -1,5 +1,6 @@
 package com.guedelho.components;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -9,12 +10,11 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import com.guedelho.enums.Direcao;
 import com.guedelho.models.NodeCobrinha;
 
-public class Canvas extends JPanel{
+public class Canvas extends java.awt.Canvas{
 	private static final long serialVersionUID = 1L;
 	private List<NodeCobrinha> cobrinha;
 	private int tamanhoBlocoCobrinha = 25;
@@ -41,9 +41,11 @@ public class Canvas extends JPanel{
 		
 		setPreferredSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
 				tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));	
+		
 		movimentandoDireita = movimentandoEsquerda = movimentandobaixo = movimentandoCima = false;
 		desenharComidaCobra = true;
 		setFocusable(true);
+		this.setBackground(new Color(170, 226, 239));
 		addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent arg0) {}
 			public void keyReleased(KeyEvent arg0) {}
@@ -77,8 +79,11 @@ public class Canvas extends JPanel{
 		else if (direcao.equals(Direcao.BAIXO)) 
 			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX(), nodeAuxiliar.getPosicaoY() + (tamanhoBlocoCobrinha + 1)));
 	}
+	
 	@Override
 	public void paint(Graphics g) {
+		super.paint(g);
+		g.setColor(new Color(46, 124, 13));
 		if (!verificarGameOver()) {
 			g.clearRect(0, 0, getWidth(), getHeight());
 			for (NodeCobrinha nodeCobrinha : cobrinha) {
@@ -96,6 +101,8 @@ public class Canvas extends JPanel{
 			g.fillRect(getPosicaoComidaX(), getPosicaoComidaY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
 		} else{
 			if (mostraMensagemGameOver) {
+				mostraMensagemGameOver = false;
+				JOptionPane.showMessageDialog(null, "Game Over");
 				init();
 			}
 		}
