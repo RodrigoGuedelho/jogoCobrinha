@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.JPanel;
+
 import com.guedelho.enums.Direcao;
 import com.guedelho.models.NodeCobrinha;
 
-public class Canvas extends java.awt.Canvas{
+public class Canvas extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private List<NodeCobrinha> cobrinha;
-	private int tamanhoBlocoCobrinha = 15;
+	private int tamanhoBlocoCobrinha = 25;
 	private boolean movimentandoDireita;
 	private boolean movimentandoEsquerda;
 	private boolean movimentandobaixo;
@@ -22,6 +24,7 @@ public class Canvas extends java.awt.Canvas{
 	private boolean desenharComidaCobra;
 	private int posicaoComidaX = 0;
 	private int posicaoComidaY = 0;
+	private int tamanhoMatrizPanelCobrinha = 30;
 	
 	public Canvas() {
 		cobrinha = new ArrayList<>();
@@ -29,7 +32,8 @@ public class Canvas extends java.awt.Canvas{
 		cobrinha.add(new NodeCobrinha(tamanhoBlocoCobrinha + 1, 0));
 		cobrinha.add(new NodeCobrinha((tamanhoBlocoCobrinha + 1) * 2, 0));
 		
-		setPreferredSize(new Dimension(50 *(tamanhoBlocoCobrinha + 1) , 50 * (tamanhoBlocoCobrinha+ 1)));	
+		setPreferredSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
+				tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));	
 		movimentandoDireita = movimentandoEsquerda = movimentandobaixo = movimentandoCima = false;
 		desenharComidaCobra = true;
 		setFocusable(true);
@@ -58,13 +62,13 @@ public class Canvas extends java.awt.Canvas{
 		NodeCobrinha nodeAuxiliar = cobrinha.get(cobrinha.size()-1);
 		cobrinha.remove(0);
 		if (direcao.equals(Direcao.ESQUERDA))
-			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX() - 16, nodeAuxiliar.getPosicaoY()));
+			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX() - (tamanhoBlocoCobrinha + 1), nodeAuxiliar.getPosicaoY()));
 		else if (direcao.equals(Direcao.DIREITA))
-			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX() + 16, nodeAuxiliar.getPosicaoY()));
+			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX() + (tamanhoBlocoCobrinha + 1), nodeAuxiliar.getPosicaoY()));
 		else if (direcao.equals(Direcao.CIMA))
-			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX(), nodeAuxiliar.getPosicaoY() - 16));
+			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX(), nodeAuxiliar.getPosicaoY() - (tamanhoBlocoCobrinha + 1)));
 		else if (direcao.equals(Direcao.BAIXO)) 
-			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX(), nodeAuxiliar.getPosicaoY() + 16));
+			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX(), nodeAuxiliar.getPosicaoY() + (tamanhoBlocoCobrinha + 1)));
 	}
 	@Override
 	public void paint(Graphics g) {
@@ -100,7 +104,7 @@ public class Canvas extends java.awt.Canvas{
 	
 	public int gerarPosicaoAleatoria() {
 		Random gerador = new Random();
-		return gerador.nextInt(49) * (tamanhoBlocoCobrinha + 1);
+		return gerador.nextInt(tamanhoMatrizPanelCobrinha -1) * (tamanhoBlocoCobrinha + 1);
 	}
 	
 	public void atualizarPosicaoComidaCobrinha() {
