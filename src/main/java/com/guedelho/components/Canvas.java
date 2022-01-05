@@ -6,9 +6,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.guedelho.enums.Direcao;
 import com.guedelho.models.NodeCobrinha;
+import com.sun.org.apache.xalan.internal.xsltc.DOMEnhancedForDTM;
 
 public class Canvas extends java.awt.Canvas{
 	private static final long serialVersionUID = 1L;
@@ -19,6 +21,8 @@ public class Canvas extends java.awt.Canvas{
 	private boolean movimentandobaixo;
 	private boolean movimentandoCima;
 	private boolean desenharComidaCobra;
+	private int posicaoComidaX = 0;
+	private int posicaoComidaY = 0;
 	
 	public Canvas() {
 		cobrinha = new ArrayList<>();
@@ -26,9 +30,9 @@ public class Canvas extends java.awt.Canvas{
 		cobrinha.add(new NodeCobrinha(tamanhoBlocoCobrinha + 1, 0));
 		cobrinha.add(new NodeCobrinha((tamanhoBlocoCobrinha + 1) * 2, 0));
 		
-		setPreferredSize(new Dimension(50 *tamanhoBlocoCobrinha, 50 * tamanhoBlocoCobrinha));	
+		setPreferredSize(new Dimension(50 *(tamanhoBlocoCobrinha + 1) , 50 * (tamanhoBlocoCobrinha+ 1)));	
 		movimentandoDireita = movimentandoEsquerda = movimentandobaixo = movimentandoCima = false;
-		desenharComidaCobra = false;
+		desenharComidaCobra = true;
 		setFocusable(true);
 		addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent arg0) {}
@@ -56,9 +60,9 @@ public class Canvas extends java.awt.Canvas{
 			NodeCobrinha nodeAuxiliar = cobrinha.get(cobrinha.size()-1);
 			List<NodeCobrinha> cobrinhaAuxiliar = new ArrayList<>();
 			
-			for (int i = cobrinha.size() -1; i >= 0; i--) {
+			/*for (int i = cobrinha.size() -1; i >= 0; i--) {
 				cobrinhaAuxiliar.add(cobrinha.get(i));
-			}
+			}*/
 			cobrinha.remove(0);
 			cobrinha.add(new NodeCobrinha(nodeAuxiliar.getPosicaoX() - 16, nodeAuxiliar.getPosicaoY()));
 		}
@@ -83,8 +87,19 @@ public class Canvas extends java.awt.Canvas{
 		g.clearRect(0, 0, getWidth(), getHeight());
 		for (NodeCobrinha nodeCobrinha : cobrinha) {
 			g.fillRect(nodeCobrinha.getPosicaoX(), nodeCobrinha.getPosicaoY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
+			if (nodeCobrinha.getPosicaoX() == getPosicaoComidaX() && nodeCobrinha.getPosicaoY() == getPosicaoComidaY()) {
+				desenharComidaCobra = true;
+			}
+				
 		}
 		
+		if (desenharComidaCobra) {
+			desenharComidaCobra = false;
+			atualizarPosicaoComidaCobrinha();
+			cobrinha.add(new NodeCobrinha(cobrinha.get(0).getPosicaoX()- (tamanhoBlocoCobrinha +1), 
+					cobrinha.get(0).getPosicaoY()));
+		}
+		g.fillRect(getPosicaoComidaX(), getPosicaoComidaY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
 		this.getToolkit().sync();
 	}
 	
@@ -97,6 +112,16 @@ public class Canvas extends java.awt.Canvas{
 			caminharCobrinha(Direcao.CIMA);
 		if (movimentandobaixo == true)
 			caminharCobrinha(Direcao.BAIXO);
+	}
+	
+	public int gerarPosicaoAleatoria() {
+		Random gerador = new Random();
+		return gerador.nextInt(49) * (tamanhoBlocoCobrinha + 1);
+	}
+	
+	public void atualizarPosicaoComidaCobrinha() {
+		setPosicaoComidaX(gerarPosicaoAleatoria());
+		setPosicaoComidaY(gerarPosicaoAleatoria());
 	}
 
 	public boolean isMovimentandoDireita() {
@@ -137,5 +162,21 @@ public class Canvas extends java.awt.Canvas{
 
 	public void setDesenharComidaCobra(boolean desenharComidaCobra) {
 		this.desenharComidaCobra = desenharComidaCobra;
+	}
+
+	public int getPosicaoComidaX() {
+		return posicaoComidaX;
+	}
+
+	public void setPosicaoComidaX(int posicaoComidaX) {
+		this.posicaoComidaX = posicaoComidaX;
+	}
+
+	public int getPosicaoComidaY() {
+		return posicaoComidaY;
+	}
+
+	public void setPosicaoComidaY(int posicaoComidaY) {
+		this.posicaoComidaY = posicaoComidaY;
 	}
 }
