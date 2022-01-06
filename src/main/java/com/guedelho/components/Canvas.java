@@ -32,6 +32,12 @@ public class Canvas extends java.awt.Canvas{
 		init();
 	}
 	
+	public void initVariaveisMovimentacao() {
+		setMovimentandoEsquerda(false);
+		setMovimentandoDireita(false);
+		setMovimentandoCima(false);
+		setMovimentandoBaixo(false);
+	}
 	public void init() {
 		mostraMensagemGameOver = true;
 		cobrinha = new ArrayList<>();
@@ -42,27 +48,34 @@ public class Canvas extends java.awt.Canvas{
 		setPreferredSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
 				tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));	
 		
-		movimentandoDireita = movimentandoEsquerda = movimentandobaixo = movimentandoCima = false;
+		initVariaveisMovimentacao();
 		desenharComidaCobra = true;
 		setFocusable(true);
-		this.setBackground(new Color(170, 226, 239));
+		this.setBackground(new Color(204, 229, 193)); //new Color(170, 226, 239)
 		addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent arg0) {}
 			public void keyReleased(KeyEvent arg0) {}
 			
 			public void keyPressed(KeyEvent arg0) {
-				setMovimentandoEsquerda(false);
-				setMovimentandoDireita(false);
-				setMovimentandoCima(false);
-				setMovimentandoBaixo(false);
-				if (arg0.getKeyCode() == KeyEvent.VK_LEFT)
+				
+				if (arg0.getKeyCode() == KeyEvent.VK_LEFT && !movimentandoDireita) {
+					initVariaveisMovimentacao();
 					setMovimentandoEsquerda(true);
-				else if (arg0.getKeyCode() == KeyEvent.VK_RIGHT)
+				}
+				else if (arg0.getKeyCode() == KeyEvent.VK_RIGHT && !movimentandoEsquerda) {
+					initVariaveisMovimentacao();
 					setMovimentandoDireita(true);
-				else if (arg0.getKeyCode() == KeyEvent.VK_UP)
+				}
+				else if (arg0.getKeyCode() == KeyEvent.VK_UP && !movimentandobaixo) {
+					initVariaveisMovimentacao();
 					setMovimentandoCima(true);
-				else if (arg0.getKeyCode() == KeyEvent.VK_DOWN)
+				}
+				else if (arg0.getKeyCode() == KeyEvent.VK_DOWN && !movimentandoCima) {
+					initVariaveisMovimentacao();
 					setMovimentandoBaixo(true);
+				}
+					
+					
 			}
 		});
 	}
