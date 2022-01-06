@@ -45,10 +45,8 @@ public class Canvas extends java.awt.Canvas{
 		cobrinha.add(new NodeCobrinha(tamanhoBlocoCobrinha + 1, 0));
 		cobrinha.add(new NodeCobrinha((tamanhoBlocoCobrinha + 1) * 2, 0));
 		
-		setSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
-				tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));
-		//setPreferredSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
-				//tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));	
+		setPreferredSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
+			tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));	
 		
 		initVariaveisMovimentacao();
 		desenharComidaCobra = true;
@@ -114,12 +112,10 @@ public class Canvas extends java.awt.Canvas{
 						cobrinha.get(0).getPosicaoY()));
 			}
 			g.fillRect(getPosicaoComidaX(), getPosicaoComidaY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
-		} else{
-			if (mostraMensagemGameOver) {
-				mostraMensagemGameOver = false;
-				JOptionPane.showMessageDialog(null, "Game Over");
-				init();
-			}
+		} else if (mostraMensagemGameOver) {
+			mostraMensagemGameOver = false;
+			JOptionPane.showMessageDialog(null, "Game Over - Pontuação: " + (cobrinha.size() - 4));
+			init();	
 		}
 		
 		this.getToolkit().sync();
