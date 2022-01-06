@@ -2,14 +2,11 @@ package com.guedelho;
 
 import java.util.TimerTask;
 
-import javax.swing.JFrame;
-
 import com.guedelho.components.Canvas;
-import com.guedelho.telas.TelaPrincipal;
 
-public class AnimaTask extends TimerTask{
+public class GameTask extends TimerTask{
 	private Canvas canvas;
-	public AnimaTask(Canvas canvas) {
+	public GameTask(Canvas canvas) {
 		this.canvas = canvas;
 	}
 	@Override
@@ -17,5 +14,4 @@ public class AnimaTask extends TimerTask{
 		canvas.atualizar();
 		canvas.repaint();
 	}
-
 }

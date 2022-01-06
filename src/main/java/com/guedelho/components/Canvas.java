@@ -45,8 +45,10 @@ public class Canvas extends java.awt.Canvas{
 		cobrinha.add(new NodeCobrinha(tamanhoBlocoCobrinha + 1, 0));
 		cobrinha.add(new NodeCobrinha((tamanhoBlocoCobrinha + 1) * 2, 0));
 		
-		setPreferredSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
-				tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));	
+		setSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
+				tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));
+		//setPreferredSize(new Dimension(tamanhoMatrizPanelCobrinha *(tamanhoBlocoCobrinha + 1) , 
+				//tamanhoMatrizPanelCobrinha * (tamanhoBlocoCobrinha+ 1)));	
 		
 		initVariaveisMovimentacao();
 		desenharComidaCobra = true;

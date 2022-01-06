@@ -9,7 +9,7 @@ public class Main {
 		TelaPrincipal tela = new TelaPrincipal();
 		tela.setVisible(true);
 		Timer timer = new Timer();
-		AnimaTask animaTask = new AnimaTask(tela.getCanvas());
-		timer.scheduleAtFixedRate(animaTask, 0, 200);
+		GameTask gameTask = new GameTask(tela.getCanvas());
+		timer.scheduleAtFixedRate(gameTask, 0, 200);
 	}
 }
