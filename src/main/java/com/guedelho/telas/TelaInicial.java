@@ -6,31 +6,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import com.guedelho.GameTask;
+import com.guedelho.components.PanelImageFundo;
 
 public class TelaInicial extends JFrame{
-	private JLabel jlabelImg;
 	private JButton btnIniciar;
+	private JComboBox<String> jComboBoxDificuldade;
+	private PanelImageFundo panelImageFundo;
+	
+	private int DIFICULDADE_FACIL = 200, DIFICULDADE_MEDIO = 100, DIFICULDADE_DIFICIL = 50; 
 	
 	public TelaInicial() {
+		panelImageFundo = new PanelImageFundo(getClass().getResource("/img/fundo.jpeg"));
+		this.setContentPane(panelImageFundo);
 		this.setSize(750, 750);	
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setLayout(null);
-		adicionarImagemFundo();
+		adicionarComboboxDificuldade();
 		adicionarButtonIniciar();
+		
 	}
-	
+
 	public void adicionarButtonIniciar() {
 		btnIniciar = new JButton("START");
-		btnIniciar.setBounds(300, 600, 150, 50);
+		btnIniciar.setBounds(300, 640, 150, 50);
 		btnIniciar.setBackground(new Color(46, 124, 13));
 		btnIniciar.setForeground(Color.white);	
 		btnIniciar.setFont(new Font("Arial", Font.BOLD, 25));
@@ -41,19 +46,24 @@ public class TelaInicial extends JFrame{
 				tela.setVisible(true);
 				Timer timer = new Timer();
 				GameTask gameTask = new GameTask(tela.getCanvas());
-				timer.scheduleAtFixedRate(gameTask, 0, 200);
-				dispose();
-				
+				if (jComboBoxDificuldade.getSelectedItem().toString().equals("Fácil"))
+					timer.scheduleAtFixedRate(gameTask, 0, DIFICULDADE_DIFICIL);
+				else if (jComboBoxDificuldade.getSelectedItem().toString().equals("Médio"))
+					timer.scheduleAtFixedRate(gameTask, 0, DIFICULDADE_MEDIO);
+				else if (jComboBoxDificuldade.getSelectedItem().toString().equals("Difícil"))
+					timer.scheduleAtFixedRate(gameTask, 0, DIFICULDADE_DIFICIL);
+				dispose();	
 			}
 		});
-		this.add(btnIniciar);
+		panelImageFundo.add(btnIniciar);
 	}
 	
-	public void adicionarImagemFundo() {
-		Icon imagem = new ImageIcon(getClass().getResource("/img/fundo.jpeg"));
-		jlabelImg = new JLabel();
-		jlabelImg.setIcon(imagem);
-		jlabelImg.setSize(750, 750);
-		this.add(jlabelImg);
+	public void adicionarComboboxDificuldade() {
+		String dificuldades[] = {"Fácil", "Médio", "Difícil"};
+		jComboBoxDificuldade = new JComboBox<String>(dificuldades);
+		jComboBoxDificuldade.setBounds(300, 590, 150, 40);
+		jComboBoxDificuldade.setFont(new Font("Arial", Font.PLAIN, 18));			
+		panelImageFundo.add(jComboBoxDificuldade);
+		UIManager.put("jComboBoxDificuldade.selectionBackground", new Color(204, 229, 193));
 	}
 }
