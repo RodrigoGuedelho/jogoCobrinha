@@ -16,19 +16,20 @@ import javax.swing.JOptionPane;
 import com.guedelho.GameTask;
 
 public class TelaInicial extends JFrame{
+	private JLabel jlabelImg;
+	private JButton btnIniciar;
+	
 	public TelaInicial() {
-		this.setSize(750, 750);
-		Icon imagem = new ImageIcon(getClass().getResource("/img/fundo.jpeg"));
-		JLabel jlabelImg;
-		jlabelImg = new JLabel();
-		
+		this.setSize(750, 750);	
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setLayout(null);
-		jlabelImg.setIcon(imagem);
-		jlabelImg.setSize(750, 750);
-		this.add(jlabelImg);
-		JButton btnIniciar = new JButton("START");
+		adicionarImagemFundo();
+		adicionarButtonIniciar();
+	}
+	
+	public void adicionarButtonIniciar() {
+		btnIniciar = new JButton("START");
 		btnIniciar.setBounds(300, 600, 150, 50);
 		btnIniciar.setBackground(new Color(46, 124, 13));
 		btnIniciar.setForeground(Color.white);	
@@ -45,8 +46,14 @@ public class TelaInicial extends JFrame{
 				
 			}
 		});
-		
 		this.add(btnIniciar);
-		
+	}
+	
+	public void adicionarImagemFundo() {
+		Icon imagem = new ImageIcon(getClass().getResource("/img/fundo.jpeg"));
+		jlabelImg = new JLabel();
+		jlabelImg.setIcon(imagem);
+		jlabelImg.setSize(750, 750);
+		this.add(jlabelImg);
 	}
 }
