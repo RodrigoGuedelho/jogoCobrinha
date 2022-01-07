@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import com.guedelho.enums.Direcao;
 import com.guedelho.models.NodeCobrinha;
+import com.guedelho.services.MusicaGame;
 
 public class Canvas extends java.awt.Canvas{
 	private static final long serialVersionUID = 1L;
@@ -114,6 +115,7 @@ public class Canvas extends java.awt.Canvas{
 			g.fillRect(getPosicaoComidaX(), getPosicaoComidaY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
 		} else if (mostraMensagemGameOver) {
 			mostraMensagemGameOver = false;
+			MusicaGame musica = new MusicaGame();
 			JOptionPane.showMessageDialog(null, "Game Over - Pontuação: " + (cobrinha.size() - 4));
 			init();	
 		}

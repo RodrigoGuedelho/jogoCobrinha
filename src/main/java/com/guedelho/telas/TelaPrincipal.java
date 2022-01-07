@@ -1,8 +1,17 @@
 package com.guedelho.telas;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import com.guedelho.components.Canvas;
 
@@ -15,10 +24,9 @@ public class TelaPrincipal extends JFrame {
 		this.setTitle("Jogo Da Cobrinha");
 		canvas = new Canvas();
 		this.add(canvas);
-		// Tela vai se ajustar no tamanho dos componentes que tiverem nela
 		this.pack();
 		this.setLocationRelativeTo(null);
-		this.setResizable(false);	
+		this.setResizable(false);
 	}
 	
 	public Canvas getCanvas() {
