@@ -23,6 +23,7 @@ public class TelaInicial extends JFrame{
 	
 	public TelaInicial() {
 		panelImageFundo = new PanelImageFundo(getClass().getResource("/img/fundo.jpeg"));
+		this.setTitle("Cobrinha Legal");
 		this.setContentPane(panelImageFundo);
 		this.setSize(750, 750);	
 		this.setLocationRelativeTo(null);
@@ -30,7 +31,6 @@ public class TelaInicial extends JFrame{
 		this.setLayout(null);
 		adicionarComboboxDificuldade();
 		adicionarButtonIniciar();
-		
 	}
 
 	public void adicionarButtonIniciar() {
@@ -47,7 +47,7 @@ public class TelaInicial extends JFrame{
 				Timer timer = new Timer();
 				GameTask gameTask = new GameTask(tela.getCanvas());
 				if (jComboBoxDificuldade.getSelectedItem().toString().equals("Fácil"))
-					timer.scheduleAtFixedRate(gameTask, 0, DIFICULDADE_DIFICIL);
+					timer.scheduleAtFixedRate(gameTask, 0, DIFICULDADE_FACIL);
 				else if (jComboBoxDificuldade.getSelectedItem().toString().equals("Médio"))
 					timer.scheduleAtFixedRate(gameTask, 0, DIFICULDADE_MEDIO);
 				else if (jComboBoxDificuldade.getSelectedItem().toString().equals("Difícil"))
