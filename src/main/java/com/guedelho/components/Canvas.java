@@ -3,12 +3,14 @@ package com.guedelho.components;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.desktop.ScreenSleepEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JOptionPane;
 
 import com.guedelho.enums.Direcao;
@@ -102,8 +104,10 @@ public class Canvas extends java.awt.Canvas{
 			g.clearRect(0, 0, getWidth(), getHeight());
 			for (NodeCobrinha nodeCobrinha : cobrinha) {
 				g.fillRect(nodeCobrinha.getPosicaoX(), nodeCobrinha.getPosicaoY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
-				if (nodeCobrinha.getPosicaoX() == getPosicaoComidaX() && nodeCobrinha.getPosicaoY() == getPosicaoComidaY()) 
-					desenharComidaCobra = true;			
+				if (nodeCobrinha.getPosicaoX() == getPosicaoComidaX() && nodeCobrinha.getPosicaoY() == getPosicaoComidaY()) { 
+					desenharComidaCobra = true;	
+					//MusicaGame.startMusicaComendo();				
+				}
 			}
 			
 			if (desenharComidaCobra) {
@@ -115,7 +119,7 @@ public class Canvas extends java.awt.Canvas{
 			g.fillRect(getPosicaoComidaX(), getPosicaoComidaY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
 		} else if (mostraMensagemGameOver) {
 			mostraMensagemGameOver = false;
-			MusicaGame musica = new MusicaGame();
+			MusicaGame.startMusicaGameOver();
 			JOptionPane.showMessageDialog(null, "Game Over - Pontuação: " + (cobrinha.size() - 4));
 			init();	
 		}
