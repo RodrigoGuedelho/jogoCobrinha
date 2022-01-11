@@ -26,6 +26,6 @@ public class MusicaGame {
 	}
 	
 	public static void startMusicaComendo() {
-		MusicaGame.startMusic("/music/comendo4.wav");
+		MusicaGame.startMusic("/music/comendo.wav");
 	}
 }
