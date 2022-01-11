@@ -106,7 +106,7 @@ public class Canvas extends java.awt.Canvas{
 				g.fillRect(nodeCobrinha.getPosicaoX(), nodeCobrinha.getPosicaoY(), tamanhoBlocoCobrinha, tamanhoBlocoCobrinha);
 				if (nodeCobrinha.getPosicaoX() == getPosicaoComidaX() && nodeCobrinha.getPosicaoY() == getPosicaoComidaY()) { 
 					desenharComidaCobra = true;	
-					//MusicaGame.startMusicaComendo();				
+					MusicaGame.startMusicaComendo();				
 				}
 			}
 			
